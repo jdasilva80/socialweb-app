@@ -1,1 +1,15 @@
-/* You can add global styles to this file, and also import other style files */
+html{
+    position: relative; /*de este modo el footer se acomoda al final del documento html 
+                porque su posición es absoluta con respecto al padre (el documento html)
+                que es relativa*/
+    min-height: 100%;
+}
+
+body{
+    margin-bottom: 50px;
+}
+
+.wrap{
+
+    padding-bottom: 50px;
+}

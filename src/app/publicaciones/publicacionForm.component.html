@@ -1,0 +1,82 @@
+<div *ngIf="modalService.modal"  class="abrir-modal animacion fadeIn">
+
+<div class="modal" tabindex="-1" role="dialog" style="display: block;">
+  
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">{{titulo}}</h5>
+        <button type="button" (click)="cerrarModal()" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        
+        <ul class="alert alert-danger" *ngIf="errores?.length > 0">
+          <li *ngFor="let err of errores">
+            {{ err }}
+          </li>
+        </ul>
+        
+        <div class="container">
+
+          <div class="row">    
+              <div class="col-sm-6">
+    
+                <form #publicacionForm="ngForm">
+                  
+                  <div class="form-group row">
+                    <label for="mensaje" class="col-form-label col-sm-2">Mensaje</label>
+                    
+                    <div class="col-sm-8">
+                      <textarea class="form-control" [(ngModel)]="publicacion.mensaje" name="mensaje" rows="10"  required minlength="4" #mensaje="ngModel"></textarea>
+                      <div class="alert alert-danger" *ngIf="mensaje.invalid && (mensaje.dirty || mensaje.touched)">
+                        <div *ngIf="mensaje.errors.required">
+                          Mensaje es requerido
+                        </div>
+                        <div *ngIf="mensaje.errors.minlength">
+                          Mensaje debe tener al menos 1 caracterer
+                        </div>
+                      </div>      
+                    </div>
+                  </div>
+    
+                  <div *ngIf="authService.hasRole('ROLE_ADMIN')" class="input-group" >
+                    <div class="custom-file">
+                      <input (change)="seleccionarFoto($event)" type="file" class="custom-file-input" id="file" #Image>
+                      <label class="custom-file-label col-sm-12" for="file" >{{Image.value == '' ? 'Selecciona una imagen' : Image.value.substring(Image.value.lastIndexOf('\\')+1, Image.value.length)}}</label>
+                    </div>
+                  </div>
+    
+                  <div *ngIf="authService.hasRole('ROLE_ADMIN')" class="form-group row mt-2" > 
+                    <div class="col-sm-6">
+    
+                      <button class="btn btn-primary" role="button" (click)='crearConFoto()' *ngIf="!publicacion.id else elseBlock"
+                              [disabled]="!publicacionForm.form.valid || !foto">Crear</button>
+                    
+                      <ng-template #elseBlock>
+                        <button class="btn btn-primary" role="button" (click)='actualizarConFoto()'  [disabled]="!publicacionForm.form.valid || !foto">Editar</button>
+                      </ng-template>
+                    
+                    </div>
+                  </div>
+              </form>
+            </div>            
+            <div class="col-sm-6">                  
+              <img *ngIf="publicacion.imagen" alt="{{publicacion.imagen}}" class="img-thumbnail rounded center" 
+                    src="http://localhost:8090/api/socialweb/publicaciones/uploads/img/{{publicacion.imagen}}">
+              
+              <img *ngIf="!publicacion.imagen" alt="vacío" class="img-thumbnail rounded center"
+                    src="http://localhost:8090/api/socialweb/images/empty.png">
+            </div>  
+          </div>  
+        </div>  
+      </div>      
+      <div class="modal-footer">
+        <button type="button" (click)="cerrarModal()"  class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>

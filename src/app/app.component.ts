@@ -6,5 +6,10 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+
+  public cosas : any[] = ['casa','perro'];
+  
+  public habilitar:boolean = true;
+
   title = 'socialweb-app';
 }

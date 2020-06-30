@@ -1,0 +1,35 @@
+<div class="card-group ">
+  <div class="card border-light mt-2" *ngIf="usuario">    
+    <div class="card-header">{{usuario.username}}</div>
+      <div class="card-body">
+      
+        <div class="container">
+          <div class="row">    
+            <div class="col-sm-6">
+              <h5 class="card-title">Información Usuario</h5>
+              
+              <button class="btn btn-sm btn-primary my-2 " (click)="habilitar = !habilitar" >{{habilitar? 'Ocultar Detalles' : 'mostrar Detalles'}}</button>
+              
+              <ul class="list-group my-2" *ngIf="habilitar">
+                <li class="list-group-item" >{{'Nombre: ' + usuario.nombre}}</li>
+                <li class="list-group-item" >{{'Apellidos: ' + usuario.apellidos}}</li>
+                <li class="list-group-item" >{{'Email: ' + usuario.email}}</li>
+                <li class="list-group-item" >{{'Fecha de Nacimiento: ' + usuario.fechaNacimiento}}</li>
+                <li class="list-group-item" >{{'Fecha de alta: ' + usuario.fechaAlta}}</li>          
+              </ul>
+            </div>
+
+            <div class="col-sm-6"> 
+
+              <button class="btn btn-sm btn-primary my-2 " (click)="habilitar2 = !habilitar2" >{{habilitar2? 'Ocultar contactos' : 'mostrar contactos'}}</button>
+              <ul class="list-group my-2" *ngIf="habilitar2">
+                <li class="list-group-item" *ngFor="let contacto of usuario.contactos">{{contacto.username + ' '+ contacto.usuarioId}}</li>  
+              </ul>
+
+            </div>     
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

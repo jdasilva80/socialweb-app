@@ -1,0 +1,51 @@
+<app-form-publicacion *ngIf="publicacionSeleccionada" [publicacion] = "publicacionSeleccionada" [paginaInjectada] = "pagina"></app-form-publicacion>
+
+<div class="card border-light mt-2" >    
+    <div *ngIf="authService.hasRole('ROLE_ADMIN')"  class="card-header text-center h2">
+         Publicaciones
+        <button class="btn btn-lg btn-primary float-right " (click)="abrirModal(null)"> + crear</button>
+    </div>
+    <div class="card-body">
+        
+        <!--<table  class = "table table-striped" *ngIf="publicaciones?.length>0">-->
+        <table *ngIf="publicaciones?.length > 0">
+            
+            <thead>
+                <tr *ngFor="let publicacion of publicaciones" class="d-flex">
+                    <th class="col-4 text-primary h4">            
+                        {{publicacion.username}}
+                    </th>
+                    <th class="col-5 text-info text-right h5">
+                        {{publicacion.fecha | date:"EEEE dd, MMMM yyyy"}} 
+                        
+                    </th>
+                    <th *ngIf="authService.hasRole('ROLE_ADMIN')" class="col-1">
+                        <button class="btn btn-sm btn-danger my-2" (click)="borrar(publicacion.id)" >borrar</button>
+                    </th>
+                </tr>
+            </thead>
+            
+            <tbody>
+                <tr *ngFor="let publicacion of publicaciones" class="d-flex">
+                    <td class="col-4 text-center">
+                        <!--button class="btn btn-sm btn-primary my-2" [routerLink]="['/publicacion/form', publicacion.id]" >ver</button>-->
+                        <img *ngIf="publicacion.imagen" alt="{{publicacion.imagen}}" (click)="abrirModal(publicacion)"
+                             class="img-thumbnail rounded center" style="cursor:pointer" 
+                             src="http://localhost:8090/api/socialweb/publicaciones/uploads/img/{{publicacion.imagen}}">
+                        
+                        <img *ngIf="!publicacion.imagen" alt="vacío" (click)="abrirModal(publicacion)"
+                             class="img-thumbnail rounded center" style="cursor:pointer" 
+                             src="http://localhost:8090/api/socialweb/images/empty.png">                        
+                    </td>
+                    <td class="col-5 h6" colspan="1">
+                        {{publicacion.mensaje}}
+                    </td>
+                    <td *ngIf="authService.hasRole('ROLE_ADMIN')"></td>
+                </tr>
+            </tbody>
+        </table>
+        <div>
+            <nav-paginator *ngIf="paginador" [paginadorHijo] = "paginador"></nav-paginator>
+        </div>
+    </div>
+</div>
