@@ -6,6 +6,8 @@ import { Router, ActivatedRoute} from '@angular/router';
 import  swal from 'sweetalert2';
 import { AuthService } from '../usuarios/auth.service';
 
+import { URL_BACKEND_ZUUL } from '../config/config';
+
 @Component({
   selector: 'app-publicaciones',
   templateUrl: './publicaciones.component.html',
@@ -17,6 +19,7 @@ export class PublicacionesComponent implements OnInit {
   paginador : any;
   publicacionSeleccionada : Publicacion;
   pagina : number;
+  urlBackendZuul : string = URL_BACKEND_ZUUL;
   
   constructor(private publicacionService: PublicacionService, private router : Router,
               private activatedRoute : ActivatedRoute, private modalService : ModalService,

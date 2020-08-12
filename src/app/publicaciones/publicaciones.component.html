@@ -31,11 +31,11 @@
                         <!--button class="btn btn-sm btn-primary my-2" [routerLink]="['/publicacion/form', publicacion.id]" >ver</button>-->
                         <img *ngIf="publicacion.imagen" alt="{{publicacion.imagen}}" (click)="abrirModal(publicacion)"
                              class="img-thumbnail rounded center" style="cursor:pointer" 
-                             src="http://localhost:8090/api/socialweb/publicaciones/uploads/img/{{publicacion.imagen}}">
+                             src="{{urlBackendZuul}}/api/socialweb/publicaciones/uploads/img/{{publicacion.imagen}}">
                         
                         <img *ngIf="!publicacion.imagen" alt="vacío" (click)="abrirModal(publicacion)"
                              class="img-thumbnail rounded center" style="cursor:pointer" 
-                             src="http://localhost:8090/api/socialweb/images/empty.png">                        
+                             src="{{urlBackendZuul}}/api/socialweb/images/empty.png">                        
                     </td>
                     <td class="col-5 h6" colspan="1">
                         {{publicacion.mensaje}}

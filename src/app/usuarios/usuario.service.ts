@@ -7,12 +7,14 @@ import swal from 'sweetalert2';
 import { Router} from '@angular/router';
 import { AuthService } from './auth.service';
 
+import { URL_BACKEND_ZUUL } from '../config/config';
+
 @Injectable({
   providedIn: 'root'
 })
 export class UsuarioService {
 
-  private urlEndPoint : string = 'http://localhost:8090/api/socialweb-usuarios/usuarios';
+  private urlEndPoint : string = URL_BACKEND_ZUUL + '/api/socialweb-usuarios/usuarios';
 
   constructor(private http : HttpClient, private router : Router, private authService: AuthService) { }
 

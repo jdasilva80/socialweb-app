@@ -8,17 +8,18 @@ import { Router} from '@angular/router';
 //import { formatDate, DatePipe} from '@angular/common';
 import { AuthService } from '../usuarios/auth.service';
 import { ModalService } from './modal.service';
+import { URL_BACKEND_ZUUL } from '../config/config';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PublicacionService {
 
-  private urlEndPointPublicacionesUsuario : string = 'http://localhost:8090/api/socialweb/publicaciones/contactos/usuario';
+  private urlEndPointPublicacionesUsuario : string = URL_BACKEND_ZUUL + '/api/socialweb/publicaciones/contactos/usuario';
   //private urlEndPointPost : string = 'http://localhost:8090/api/socialweb/publicaciones/form';
-  private urlEndPointPostConFoto : string = 'http://localhost:8090/api/socialweb/publicaciones/formmultipartfile';
-  private urlEndPointGetPutDelete : string = 'http://localhost:8090/api/socialweb/publicaciones';
-  private urlEndPointPutConFoto : string = 'http://localhost:8090/api/socialweb/publicaciones/formmultipartfile';
+  private urlEndPointPostConFoto : string = URL_BACKEND_ZUUL + '/api/socialweb/publicaciones/formmultipartfile';
+  private urlEndPointGetPutDelete : string = URL_BACKEND_ZUUL + '/api/socialweb/publicaciones';
+  private urlEndPointPutConFoto : string = URL_BACKEND_ZUUL + '/api/socialweb/publicaciones/formmultipartfile';
   //private httpHeaders = new HttpHeaders({'Content-Type': 'application/json'})
   private httpHeaders = new HttpHeaders();
 

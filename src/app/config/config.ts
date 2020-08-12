@@ -1,0 +1,1 @@
+export const URL_BACKEND_ZUUL = 'https://soyjose-zuul.herokuapp.com'
