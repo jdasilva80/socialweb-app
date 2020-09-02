@@ -59,15 +59,22 @@
                       </ng-template>
                     
                     </div>
+                  </div>               
+              
+                  <div class="progress" *ngIf="progreso > 0" style="height:40px;">
+                    <div class="progress-bar progress-bar-striped" role="progressbar" [ngStyle]="{width:progreso+'%'}" attr.aria-valuenow="{{progreso}}" aria-valuemin="0" aria-valuemax="100">
+                      {{progreso}} %            
+                    </div>
                   </div>
+
               </form>
             </div>            
             <div class="col-sm-6">                  
               <img *ngIf="publicacion.imagen" alt="{{publicacion.imagen}}" class="img-thumbnail rounded center" 
-                    src="http://localhost:8090/api/socialweb/publicaciones/uploads/img/{{publicacion.imagen}}">
+                    src="{{urlBackend}}/publicaciones/uploads/img/{{publicacion.imagen}}">
               
               <img *ngIf="!publicacion.imagen" alt="vacío" class="img-thumbnail rounded center"
-                    src="http://localhost:8090/api/socialweb/images/empty.png">
+                    src="{{urlBackend}}/images/empty.png">
             </div>  
           </div>  
         </div>  

@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Usuario } from './usuario';
 import { Observable } from 'rxjs';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpRequest, HttpEvent } from '@angular/common/http';
 
-import { URL_BACKEND_ZUUL } from '../config/config';
+import { URL_BACKEND_OAUTH2 } from '../config/config';
 
 @Injectable({
   providedIn: 'root'
@@ -37,17 +37,17 @@ export class AuthService {
     return null;
   }
 
-  login(usuario: Usuario): Observable<any> {
+  login(usuario: Usuario): Observable<HttpEvent<{}>> {
 
-    const urlEndpoint = URL_BACKEND_ZUUL + '/api/security/oauth/token';
+    const urlEndpoint = URL_BACKEND_OAUTH2 + '/oauth/token';
 
     const credenciales = btoa('frontendapp' + ':' + '12345');
-    
+     /*
     const httpHeaders = new HttpHeaders({
       'Content-Type': 'application/x-www-form-urlencoded',
       'Authorization': 'Basic ' + credenciales
     });
-    /*
+   
     const httpHeaders = new HttpHeaders({
       'Content-Type': 'application/x-www-form-urlencoded',
       'Authorization': 'Basic ' + credenciales,
@@ -62,8 +62,20 @@ export class AuthService {
     params.set('username', usuario.username);
     params.set('password', usuario.password);
     
-    return this.http.post<any>(urlEndpoint, params.toString(), { headers: httpHeaders });
+    const req = new HttpRequest('POST', urlEndpoint, params.toString(), {
+      reportProgress: true
+    });
+    const req2 = req.clone({
+      headers: req.headers.set('Content-Type', 'application/x-www-form-urlencoded')
+    });
+    const req3 = req.clone({
+      headers: req2.headers.set('Authorization','Basic ' + credenciales)
+    });
+
+    return this.http.request(req3);
     /*
+    return this.http.post<any>(urlEndpoint, params.toString(), { headers: httpHeaders });
+    
     const formData = new FormData();
     formData.append('grant_type', 'password');
     formData.append('username', usuario.username);

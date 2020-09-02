@@ -5,6 +5,8 @@ import { ModalService} from './modal.service'
 import { Router, ActivatedRoute } from '@angular/router';
 import swal from 'sweetalert2'
 import { AuthService } from '../usuarios/auth.service';
+import { URL_BACKEND } from '../config/config';
+import { HttpEventType } from '@angular/common/http';
 
 @Component({
   selector: 'app-form-publicacion',
@@ -19,6 +21,8 @@ export class PublicacionFormComponent implements OnInit, AfterViewInit{
   public foto: File;
   oldMensaje:string;
   @Input() paginaInjectada : number;
+  urlBackend : string = URL_BACKEND;
+  progreso : number = 0;
 
   constructor(private publicacionService: PublicacionService, private router : Router,
               private activatedRoute : ActivatedRoute, public modalService : ModalService,
@@ -44,11 +48,19 @@ export class PublicacionFormComponent implements OnInit, AfterViewInit{
         if(id){
 
           this.publicacionService.getPublicacion(id).subscribe(
-            
-            (response) => {
-                this.publicacion = response;
-            }
-          )
+           
+            (event) => {
+      
+              if(event.type === HttpEventType.DownloadProgress){
+        
+                this.progreso = 1;
+        
+              }else if(event.type === HttpEventType.Response){
+
+                this.publicacion = event.body as Publicacion;
+                this.progreso = 0;
+              }
+          })
         }
       }
     )
@@ -75,12 +87,20 @@ export class PublicacionFormComponent implements OnInit, AfterViewInit{
 
       this.publicacionService.crearConFoto(this.publicacion, 1, this.foto).subscribe( 
 
-      (response) => {
-        
-        this.modalService.notificarUpload.emit(response.publicacion);       
-        swal.fire('Nueva publicación', `se ha creado la publicación : ${response.publicacion.id}`, 'success');
-        this.cerrarModal();
-        this.router.navigate(['/publicaciones/page/', 0]);
+        (event) => {
+      
+          if(event.type === HttpEventType.UploadProgress){
+    
+            this.progreso = Math.round((event.loaded / event.total) * 100);
+    
+          }else if(event.type === HttpEventType.Response){
+            this.progreso = 0;
+            let response:any = event.body as Publicacion;
+            this.modalService.notificarUpload.emit(response.publicacion);       
+            swal.fire('Nueva publicación', `se ha creado la publicación : ${response.publicacion.id}`, 'success');
+            this.cerrarModal();
+            this.router.navigate(['/publicaciones/page/', 0]);
+          }
       })
    }
   }
@@ -124,18 +144,23 @@ export class PublicacionFormComponent implements OnInit, AfterViewInit{
       }else{
 
         this.publicacionService.actualizarConFoto(this.publicacion, this.foto).subscribe( 
-
-          (response) => {
-
-            this.modalService.notificarUpload.emit(response.publicacion);
-            swal.fire('Publicación actualizada', `se ha actualizado la publicación : ${response.publicacion.id}`, 'success');
-            this.cerrarModal();            
-            this.router.navigate(['/publicaciones/page/',this.paginaInjectada]);
-          },
-            e =>{
-              this.errores = e.error.errores as string[];
+          (event) => {
+      
+            if(event.type === HttpEventType.UploadProgress){
+      
+              this.progreso = Math.round((event.loaded / event.total) * 100);
+      
+            }else if(event.type === HttpEventType.Response){
+              
+              this.progreso = 0;
+              let response:any = event.body as Publicacion;
+              this.modalService.notificarUpload.emit(response.publicacion);
+              swal.fire('Publicación actualizada', `se ha actualizado la publicación : ${response.publicacion.id}`, 'success');
+              this.cerrarModal();            
+              this.router.navigate(['/publicaciones/page/',this.paginaInjectada]);
+             
             }
-          )
+          })          
         }
     }
 
