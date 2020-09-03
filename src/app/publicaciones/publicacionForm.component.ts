@@ -68,7 +68,7 @@ export class PublicacionFormComponent implements OnInit, AfterViewInit{
   
  // crear() : void{
 
-  //  this.publicacionService.create(this.publicacion, 1).subscribe( 
+  //  this.publicacionService.create(this.publicacion, this.authService.usuario).subscribe( 
 
     //  (response) => {
 
@@ -85,7 +85,7 @@ export class PublicacionFormComponent implements OnInit, AfterViewInit{
 
     }else{
 
-      this.publicacionService.crearConFoto(this.publicacion, 1, this.foto).subscribe( 
+      this.publicacionService.crearConFoto(this.publicacion, this.authService.usuario.id, this.foto).subscribe( 
 
         (event) => {
       

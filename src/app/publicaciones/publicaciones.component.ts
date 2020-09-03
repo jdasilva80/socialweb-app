@@ -88,7 +88,7 @@ export class PublicacionesComponent implements OnInit {
     swal.fire({
 
       title: 'Estás seguro?',
-      text: "será irreversible!",
+      text: "Será irreversible !",
       icon: 'warning',
       showCancelButton: true,
       confirmButtonColor: '#3085d6',

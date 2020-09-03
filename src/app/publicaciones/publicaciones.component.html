@@ -51,8 +51,8 @@
                              class="img-thumbnail rounded center" style="cursor:pointer" 
                              src="{{urlBackend}}/images/empty.png">                        
                     </td>
-                    <td class="col-4 h6" colspan="1">
-                        {{publicacion.mensaje}}
+                    <td class="col-4" colspan="1">
+                        <span class="text-success"><b>{{publicacion.mensaje}}</b></span>
                         <div #comentarios>    
                             <table *ngIf="publicacion.comentarios?.length > 0">
                                 <tr *ngFor="let comentario of publicacion.comentarios" class="col-4">

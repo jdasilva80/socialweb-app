@@ -161,7 +161,7 @@ export class PublicacionService {
     );
   }
 
-  actualizarConFoto(publicacion : Publicacion, archivo: File) : Observable<any>{
+  actualizarConFoto(publicacion : Publicacion, archivo: File) : Observable<HttpEvent<{}>>{
 
     let formData = new FormData();
     formData.append("file", archivo);
@@ -205,7 +205,7 @@ export class PublicacionService {
     );
   }*/
 
-  delete(publicacionId:number) : Observable<any>{
+  delete(publicacionId:number) : Observable<HttpEvent<{}>>{
 
     return this.http.delete<any>(`${this.urlEndPointGetPutDelete}/${publicacionId}`).pipe(
       

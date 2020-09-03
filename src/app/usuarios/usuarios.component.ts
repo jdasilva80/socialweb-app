@@ -22,9 +22,10 @@ export class UsuariosComponent implements OnInit {
     this.usuarioService.getUsuario().subscribe( event => {
         
       if(event.type === HttpEventType.Response){
+
   
           this.cargando = false;
-          this.usuario = event.body as Usuario;
+          this.usuario = event.body as Usuario; 
         }
       });
   }
