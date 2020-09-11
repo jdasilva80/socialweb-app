@@ -101,9 +101,9 @@ export class PublicacionesComponent implements OnInit {
 
         (response) => {
                     
-          this.publicaciones= this.publicaciones.filter( (p) => p.id != publicacionId );
-          swal.fire('atención', `publicacion eliminada con id ${publicacionId}`, 'success');          
-          this.router.navigate(['/publicaciones/page/', this.pagina>0 ? this.pagina-1 : 0]);
+          this.publicaciones= this.publicaciones.filter( (p) => p.id != publicacionId );       
+          this.router.navigate(['/publicaciones/page/', this.pagina>0 ? this.pagina-1 : 0]);          
+          swal.fire('atención', `publicacion eliminada con id ${publicacionId}`, 'success');   
       })
     })   
   }

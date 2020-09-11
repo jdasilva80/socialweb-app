@@ -94,12 +94,14 @@ export class PublicacionFormComponent implements OnInit, AfterViewInit{
             this.progreso = Math.round((event.loaded / event.total) * 100);
     
           }else if(event.type === HttpEventType.Response){
+
             this.progreso = 0;
             let response:any = event.body as Publicacion;
-            this.modalService.notificarUpload.emit(response.publicacion);       
+            this.router.navigate(['/publicaciones/page/', 0]);            
+            this.modalService.notificarUpload.emit(response.publicacion);
+                   
+            this.cerrarModal();                      
             swal.fire('Nueva publicación', `se ha creado la publicación : ${response.publicacion.id}`, 'success');
-            this.cerrarModal();
-            this.router.navigate(['/publicaciones/page/', 0]);
           }
       })
    }

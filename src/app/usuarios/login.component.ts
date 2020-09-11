@@ -59,8 +59,8 @@ export class LoginComponent implements OnInit {
 
       }
     }, err => {
-      
-      if (err.status == 400) {
+      this.cargando = false;
+      if (err.status > 400 || err.status < 500) {
         swal.fire('Error Login', 'Usuario o clave incorrectas!', 'error');
       }
     });

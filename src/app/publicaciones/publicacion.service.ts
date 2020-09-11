@@ -122,6 +122,7 @@ export class PublicacionService {
     let formData = new FormData();
     formData.append("file", archivo);
     //formData.append('publicacion', JSON.stringify(publicacion));
+    
     formData.append('publicacion', new Blob([JSON.stringify(publicacion)], {type: "application/json"}));
 
     const req = new HttpRequest('POST', this.urlEndPointPostConFoto, formData, {
